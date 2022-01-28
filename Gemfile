@@ -6,7 +6,7 @@ gem 'pg', '~> 0.21'
 # Удобная админка для управления любыми сущностями
 gem 'rails_admin'
 
-gem 'devise', '~> 4.1.1'
+gem 'devise', '~> 4.4.0'
 gem 'devise-i18n'
 
 gem 'uglifier', '>= 1.3.0'
