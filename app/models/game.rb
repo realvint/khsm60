@@ -1,25 +1,16 @@
-#  (c) goodprogrammer.ru
-#
-# Модельи игры — создается когда пользователь начинает новую игру
-# Хранит/обновляет состояние игры и отвечает за игровой процесс.
 class Game < ActiveRecord::Base
-
-  # денежный приз за каждый вопрос
   PRIZES = [
     100, 200, 300, 500, 1000,
     2000, 4000, 8000, 16000, 32000,
     64000, 125000, 250000, 500000, 1000000
   ].freeze
 
-  # номера несгораемых уровней
   FIREPROOF_LEVELS = [4, 9, 14].freeze
 
-  # время на одну игру
   TIME_LIMIT = 35.minutes
 
   belongs_to :user
 
-  # массив игровых вопросов для этой игры
   has_many :game_questions, dependent: :destroy
 
   validates :user, presence: true
