@@ -3,7 +3,7 @@
 # см. другие примеры на
 # http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
 
-FactoryGirl.define do
+FactoryBot.define do
   # фабрика, создающая юзеров
   factory :user do
     # генерим рандомное имя
