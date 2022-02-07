@@ -16,20 +16,20 @@ RSpec.describe GameQuestion, type: :model do
     end
   end
 
-  describe '.correct_answer_key' do
-    it 'return correct answer key' do
+  describe '#correct_answer_key' do
+    it 'returns correct answer key' do
       expect(game_question.correct_answer_key).to eq 'b'
     end
   end
 
-  describe '.text' do
-    it ' return correct text' do
+  describe '#text' do
+    it ' returns correct text' do
       expect(game_question.text).to eq(game_question.question.text)
     end
   end
 
-  describe '.level' do
-    it 'return correct level' do
+  describe '#level' do
+    it 'returns correct level' do
       expect(game_question.level).to eq(game_question.question.level)
     end
   end
