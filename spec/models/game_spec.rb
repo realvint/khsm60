@@ -94,4 +94,42 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.previous_level).to eq game_w_questions.current_level - 1
     end
   end
+
+  describe '#answer_current_question!' do
+    context 'when answer is correct' do
+      it 'should returns true if correct answer' do
+        level = game_w_questions.current_level
+        correct_answer_key = game_w_questions.game_questions[level].correct_answer_key
+
+        expect(game_w_questions.answer_current_question!(correct_answer_key)).to eq true
+      end
+    end
+
+    context 'when answer is not correct' do
+      it 'should returns false if not correct answer' do
+        expect(game_w_questions.answer_current_question!('a')).to eq false
+      end
+    end
+
+    context 'when current question is last' do
+      it 'should returns status won if answer to last question is true' do
+        game_w_questions.current_level = 14
+        level = game_w_questions.current_level
+        correct_answer_key = game_w_questions.game_questions[level].correct_answer_key
+        game_w_questions.answer_current_question!(correct_answer_key)
+
+        expect(game_w_questions.status).to eq(:won)
+      end
+    end
+
+    context 'when the correct answer is given after time' do
+      it 'should returns false if time is out' do
+        game_w_questions.created_at = Game::TIME_LIMIT.ago
+        level = game_w_questions.current_level
+        correct_answer_key = game_w_questions.game_questions[level].correct_answer_key
+
+        expect(game_w_questions.answer_current_question!(correct_answer_key)).to eq false
+      end
+    end
+  end
 end
