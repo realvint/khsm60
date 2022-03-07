@@ -18,15 +18,45 @@ RSpec.describe GamesController, type: :controller do
   let(:game_w_questions) { FactoryBot.create(:game_with_questions, user: user) }
 
   # группа тестов для незалогиненного юзера (Анонимус)
-  context 'Anon' do
-    # из экшена show анона посылаем
-    it 'kick from #show' do
-      # вызываем экшен
-      get :show, id: game_w_questions.id
-      # проверяем ответ
-      expect(response.status).not_to eq(200) # статус не 200 ОК
-      expect(response).to redirect_to(new_user_session_path) # devise должен отправить на логин
-      expect(flash[:alert]).to be # во flash должен быть прописана ошибка
+  describe 'anon user' do
+    context 'when anon user trying to open game page' do
+      it 'show alert and redirect to login page' do
+        get :show, id: game_w_questions.id
+
+        expect(response.status).not_to eq(200)
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to be
+      end
+    end
+
+    context 'when anon user trying to create game' do
+      it 'show alert and redirect to login page' do
+        post :create
+
+        expect(response.status).not_to eq(200)
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to be
+      end
+    end
+
+    context 'when anon user trying to give an answer' do
+      it 'show alert and redirect to login page' do
+        put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
+
+        expect(response.status).not_to eq(200)
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to be
+      end
+    end
+
+    context 'when anon user trying to take money in game' do
+      it 'show alert and redirect to login page' do
+        put :take_money, id: game_w_questions.id
+
+        expect(response.status).not_to eq(200)
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to be
+      end
     end
   end
 
